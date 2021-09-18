@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.db import transaction
-from .models import User, Viewer, Owner
+from .models import User, Viewer, Employee
 
 
 class ViewerSignUpForm(UserCreationForm):
@@ -39,7 +39,7 @@ class EmployeeSignUpForm(UserCreationForm):
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
-        user.is_project_owner = True
+        user.is_employee = True
         user.is_staff = True
         user.first_name = self.cleaned_data.get('name')
         user.email = self.cleaned_data.get('email')
