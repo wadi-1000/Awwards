@@ -19,3 +19,14 @@ class viewer_register(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('/')
+
+
+class employee_register(CreateView):
+    model = User
+    form_class = EmployeeSignUpForm
+    template_name = 'registration/employee_register.html'
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('/')
