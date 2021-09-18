@@ -50,6 +50,8 @@ def login_request(request):
                   context={'form': AuthenticationForm()})
 
 
-                  
+def logout_view(request):
+    logout(request)
+    return redirect('/')        
 
 
