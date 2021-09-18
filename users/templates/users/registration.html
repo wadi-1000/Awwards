@@ -1,0 +1,43 @@
+{% extends "users/base.html" %}
+{% load bootstrap5 %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+<div class="container login">
+    <div class="row">
+        <div class="col-4">
+            <img src="" alt="">
+        </div>
+            {% if form.errors %}
+            <p>Some information Might be Incorrect </p>
+            {% endif %}
+            <div class="col-4" style="font-family: 'Lora', serif; margin: 30px; color: darkslategray;">
+                    <form method="POST">
+                        <h3 class="text-center" style="font-family: 'Crimson Text', serif;">Awwards</h3><br>
+                        {% csrf_token %}
+                        <legend class="border-bottom mb-4">Join Today</legend>
+                        {{ form|crispy }}
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-sm">
+                        </div>
+                        <div class = "border-top pt-3">
+                            <small class="text-muted">
+                                Already Have An Account?<a class="ml-2" href="{% url 'login' %}">Sign In</a>
+                            </small>
+                        </div>
+                    </form>
+                    </div>
+                
+            
+        
+      
+    </div>
+
+</div>
+{% endblock %}
