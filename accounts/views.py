@@ -9,4 +9,13 @@ from .models import
 def register(request):
     return render(request, 'registration/register.html')
 
-    
+
+class viewer_register(CreateView):
+    model = User
+    form_class = ViewerSignUpForm
+    template_name = 'registration/viewer_register.html'
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('/')
