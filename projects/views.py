@@ -13,12 +13,12 @@ def home(request):
     return render(request, 'home.html')
 
 
-@login_required
+
 def viewProject(request, pk):
     project=Project.objects.filter(id=pk)
     current_user=request.user
 
-    return render(request, 'projects/project.html', {"project":project})
+    return render(request, 'project.html', {"project":project})
 
 @login_required
 def uploadProject(request):
@@ -38,3 +38,15 @@ def uploadProject(request):
         form=UploadNewProject()
 
     return render(request, 'uploadproject.html', {"form":form})
+
+def searchProject(request):
+    
+    if 'project' in request.GET and request.GET['project']:
+        search_term=request.GET.get('project')
+        searched_projects=Project.search_by_title(search_term)
+        message=f"{search_term}"
+
+        return render(request, "search.html", {"projects":searched_projects, "message":message})
+    else:
+        message="You have not searched for any project"
+        return render(request, "search.html")
