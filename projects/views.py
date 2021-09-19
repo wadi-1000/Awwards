@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from .forms import  UploadNewProject
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.views.generic.edit import CreateView
-from .models import  Project
+from .models import  Project,Rating
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
@@ -50,3 +50,55 @@ def searchProject(request):
     else:
         message="You have not searched for any project"
         return render(request, "search.html")
+
+
+
+@login_required
+def rateProject(request, pk):
+    projects=Project.objects.filter(id=pk)
+    return render(request, 'projects/rateprojects.html', {"projects":projects})
+
+
+def rateOneProject(request):
+    current_user=request.user
+    if request.method=="POST": 
+        el_id=request.POST.get('el_id')   
+        val=request.POST.get('val')
+        # print(val)
+        project=Project.objects.get(id=el_id)
+        project.design_rate=val
+        project.save()
+
+        return JsonResponse({'success':'true', 'designrate':val}, safe=False)
+    else:
+        return JsonResponse({'success':'false'})
+
+
+def rateUseProject(request):
+    current_user=request.user
+    if request.method=="POST": 
+        el_id=request.POST.get('el_id')   
+        val=request.POST.get('useVal')
+        print(val)
+        project=Project.objects.get(id=el_id)
+        project.usability_rate=val
+        project.save()
+
+        return JsonResponse({'success':'true', 'usabilityrate':val}, safe=False)
+    else:
+        return JsonResponse({'success':'false'})
+
+
+def rateContentProject(request):
+    current_user=request.user
+    if request.method=="POST": 
+        el_id=request.POST.get('el_id')   
+        val=request.POST.get('contentVal')
+        print(val)
+        project=Project.objects.get(id=el_id)
+        project.content_rate=val
+        project.save()
+
+        return JsonResponse({'success':'true', 'contentrate':val}, safe=False)
+    else:
+        return JsonResponse({'success':'false'})
