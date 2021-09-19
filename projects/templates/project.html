@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+<div class="container-fluid viewproject">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div id="viewproject">
+                {% for project in project %}
+                <p class="text-center">Project Link: <a href="{{project.link}}">{{project.link}}</a></p>
+                <h4 class="text-center">Project Title: {{project.title}}</h4>
+                <br>
+                <br>
+                <div class="text-center">
+                    <span class="text-center">Design Rating: {{project.design_rate}}</span> |
+                    <span class="text-center">Usability Rating: {{project.usability_rate}}</span> |
+                    <span class="text-center">Content Rating: {{project.content_rate}}</span>
+                </div>
+                <br>
+                <br>
+                <small style="margin-left: 150px;">Submitted By: {{project.profile}}</small>
+                <img src="{{project.image.url}}" alt="{{project.description}}">
+                <br>
+                <br>
+                <br>
+                <p class="viewdescription">Project Description: {{project.description}}</p>
+                {% endfor %}
+            </div>
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+{% endblock %}
