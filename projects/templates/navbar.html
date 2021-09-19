@@ -1,0 +1,35 @@
+<style>
+    #b{
+        font-size: 2em;
+        color: white;
+        font-family: 'Lora', serif;
+    }
+    #txt{
+        font-size: 1.1em;
+        color: white;
+        font-weight: normal;
+        font-family: 'Lora', serif;
+    }
+    nav{
+        background-color: #000000de;
+    }
+    #txt:hover{
+        color:wheat;
+        font-family: 'Lora', serif;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}" id="b">Awwards</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="{% url 'home'%}" id="txt">Home</a>
+          <a class="nav-link" href="#" id="txt">Projects</a>
+          <a class="nav-link" href="#" id="txt">Post</a>
+        </div>
+      </div>
+    </div>
+  </nav>
