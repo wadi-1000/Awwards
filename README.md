@@ -58,4 +58,4 @@ If any problems arise contact me at:
 
 ### License
 
-[Here] (https://raw.githubusercontent.com/wadi-1000/Insta/master/LICENSE)
+[Here] (https://raw.githubusercontent.com/wadi-1000/Awwards/master/README.md)
