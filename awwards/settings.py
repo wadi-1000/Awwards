@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 import cloudinary
 import cloudinary.uploader
@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'cloudinary',
+    'phonenumber_field',
+    'rest_framework',
+    'rest_framework.authtoken',
+    
     
 ]
 
@@ -131,6 +135,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -143,3 +150,11 @@ cloudinary.config(
     api_key='229921375592722',
     api_secret='GD1ytstf5Ry9HJLh9n7jIz8wCGA',
 )
+
+LOGIN_REDIRECT_URL = 'home'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}

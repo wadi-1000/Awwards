@@ -1,9 +1,16 @@
-from .models import Project, Profile
+from .models import Project,Rating
 from django.forms import ModelForm
 from django import forms
+from users.models import Profile
 
 
-class AddProjectForm(ModelForm):
+class UploadNewProject(forms.ModelForm):
     class Meta:
-        model = Project
-        exclude = ['profile', 'post_date', 'voters', 'design_score','usability_score','content_score','average_design','average_usability','average_content','average_score']
+        model=Project
+        exclude=['design_rating', 'usability_rating', 'content_rating', 'average_review', 'profile']
+        fields=['title', 'image', 'description', 'link']
+
+class RatingsForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['design', 'usability', 'content']

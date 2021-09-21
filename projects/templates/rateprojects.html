@@ -1,95 +1,68 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% load bootstrap5 %}
 
 {% block content %}
-<div class="container-fluid rateproject">
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            {% for project in projects %}
-            <div class="row rateprojectrow">
-               
-                <h5 id="overall-rating"></h5>
-                <p class="text-center">{{project.title}}</p>
-                <small class="text-center">Submitted By: {{project.profile}}</small>
-                <p class="text-center">View Project: <a href="{{project.link}}">{{project.link}}</a></p>
-                <img src="{{project.image.url}}" alt="{{project.title}}">
-                <br>
-                <br>
-                <p class="viewdescription">{{project.description}}</p>                
-               
-            </div>
-            <div class="design-rate text-center">
-                <p>Design Rate:</p>
-                <form action="" class="design-rate-form" method="POST" id={{project.id}}>
-                    {% csrf_token%}
-                    <button id="design-first" type="submit" value="1">1</button>
-                    <button id="design-second" type="submit">2</button>
-                    <button id="design-third" type="submit">3</button>
-                    <button id="design-fourth" type="submit">4</button>
-                    <button id="design-fifth" type="submit">5</button>
-                    <button id="design-sixth" type="submit">6</button>
-                    <button id="design-seventh" type="submit">7</button>
-                    <button id="design-eighth" type="submit">8</button>
-                    <button id="design-ninth" type="submit">9</button>
-                    <button id="design-tenth" type="submit">10</button>
-                </form>
-                <span id="design-confirm-box"></span>
-            </div>
-            <br>
-            <div class="usability-rate text-center">
-                <p>Usability Rate:</p>
-                <form action="" method="POST" class="usability-rate-form" id={{project.id}}>
-                    {% csrf_token %}
+<div class="row">
+    <div class="col-md-4">
+<form  method="post" action="{% url 'rate' project.id %}" style="margin-left: 50px; margin-top: 70px;">
+    {% csrf_token %}
+    <legend class="border-bottom mb-4">Rate the project below.</legend>
+    {{ form|crispy }}
 
-                    <button id="usability-first">1</button>
-                    <button id="usability-second">2</button>
-                    <button id="usability-third">3</button>
-                    <button id="usability-fourth">4</button>
-                    <button id="usability-fifth">5</button>
-                    <button id="usability-sixth">6</button>
-                    <button id="usability-seventh">7</button>
-                    <button id="usability-eighth">8</button>
-                    <button id="usability-ninth">9</button>
-                    <button id="usability-tenth">10</button>
-                </form>
-                <span id="usability-confirm-box"></span>
-            </div>
-            <br>
-            <div class="content-rate text-center">
-                <p>Content Rate:</p>
-                <form method="POST" class="content-rate-form" action="" id={{project.id}}>
-                    {% csrf_token %}
-                    <button id="content-first">1</button>
-                    <button id="content-second">2</button>
-                    <button id="content-third">3</button>
-                    <button id="content-fourth">4</button>
-                    <button id="content-fifth">5</button>
-                    <button id="content-sixth">6</button>
-                    <button id="content-seventh">7</button>
-                    <button id="content-eighth">8</button>
-                    <button id="content-ninth">9</button>
-                    <button id="content-tenth">10</button>
-                </form>
-                <span id="content-confirm-box"></span>
-
-            </div>
-            <br>
-            <br>
-            <br>
-            {% endfor %}
-        </div>
-        <div class="col-md-1"></div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-primary btn-sm" value="Submit">
     </div>
+
+    <input type="hidden" name="next" value="{{next}}">
+
+  </form>
+
+
+ </div>
+<div class="col-md-3" style="margin-left: 50px; margin-top: 65px;">
+    {% for rating in project.ratings.all %}
+    <h5>Ratings</h5>
+    <hr>
+    <div id="design"> <span class="rates">Design</span>: {{ rating.design_average}}<br>
+       
+    </div>
+    <br>
+    <div id="usable" class="mx-auto">  <span class="rates">Usability</span>: {{ rating.usability_average }}<br>
+      
+    </div>
+    <br>
+    <div id="content"><span class="rates">Content</span>: {{ rating.content_average }}<br>
+        
+    </div>
+    <br>
+    {% endfor %}
+    
+    </div>
+   
+   <div class="col-md-3" style="margin-left: 50px; margin-top: 65px;">
+    <h5 class="D-block mx-auto">Average Ratings</h5>
+    <hr>
+            {% for rating in project.ratings.all %}
+            
+            <a class="btn btn-outline-danger btn-sm" ><h5>{{ rating.score }}</h5>
+                <span class="sc">Average Score</span>
+            </a>
+            <a class="btn btn-outline-success btn-sm" ><h5>{{ rating.design_average }}</h5>
+                <span class="sc">Design Average</span>
+            </a>
+            <a class="btn btn-outline-primary btn-sm" id="u"><h5>{{ rating.usability_average }}</h5>
+                <span class="sc">Usability Average</span>
+            </a>
+            <a class="btn btn-outline-danger btn-sm" id="c"><h5>{{ rating.content_average }}</h5>
+                <span class="sc">Content Average</span>
+            </a>
+            
+            {% endfor %}
+        
+        </div>
+        
 </div>
 
-{% endblock %}
-
-{% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
-<script src="{% static 'JS/script.js' %}"></script>
-{% bootstrap_javascript %}
 {% endblock %}

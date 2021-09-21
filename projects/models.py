@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from users.models import Profile
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
-
 # Create your models here.
 
 class Project(models.Model):
@@ -13,23 +12,7 @@ class Project(models.Model):
     image=CloudinaryField('image')
     description=models.TextField()
     link=models.CharField(max_length=1000)
-    design_rate=models.IntegerField(default=0,
-    validators=[
-        MaxValueValidator(10),
-        MinValueValidator(0)
-    ])
-    usability_rate=models.IntegerField(default=0,
-    validators=[
-        MaxValueValidator(10),
-        MinValueValidator(0)
-    ])
-    content_rate=models.IntegerField(default=0,
-    validators=[
-        MaxValueValidator(10),
-        MinValueValidator(0)
-    ])
-    average_review=models.IntegerField(default=0)
-
+    
 
     def __str__(self):
         return self.title
@@ -45,12 +28,36 @@ class Project(models.Model):
         return projects
 
 class Rating(models.Model):
-    design=models.ForeignKey(Project, related_name="design_rated", on_delete=models.CASCADE)
-    design_rate=models.IntegerField()
-    usability=models.ForeignKey(Project, related_name="usability_rated", on_delete=models.CASCADE)
-    usability_rate=models.IntegerField()
-    content=models.ForeignKey(Project, related_name="content_rated", on_delete=models.CASCADE)
-    content_rate=models.IntegerField()
+    rating = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+        (6, '6'),
+        (7, '7'),
+        (8, '8'),
+        (9, '9'),
+        (10, '10'),
+    )
+
+    design = models.IntegerField(choices=rating, default=0, blank=True)
+    usability = models.IntegerField(choices=rating, blank=True)
+    content = models.IntegerField(choices=rating, blank=True)
+    score = models.FloatField(default=0, blank=True)
+    design_average = models.FloatField(default=0, blank=True)
+    usability_average = models.FloatField(default=0, blank=True)
+    content_average = models.FloatField(default=0, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='rater')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='ratings', null=True)
+
+    def save_rating(self):
+        self.save()
+
+    @classmethod
+    def get_ratings(cls, id):
+        ratings = Rating.objects.filter(post_id=id).all()
+        return ratings
 
     def __str__(self):
-        return self.design_rate
+        return f'{self.post} Rating'

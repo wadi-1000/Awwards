@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+<div class="container-fluid searchpage">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row" style="font-size: 18px;">
+                {% if projects %}
+                <p class="searchedmessage">Found {{projects|length}} projects with the term {{message}}</p>
+                {% else %}
+                <p class="searchedmessage">Found 0 projects with the term {{message}}</p>
+                {% endif %}  
+            </div>
+            <div class="row">
+                {% for project in projects %}
+                <div class="col-md-4 project-card">
+                    <img src="{{project.image.url}}">
+                    <br>
+                    <br>
+                    <button style="background-color:rgb(50, 68, 68); border-radius: 5px;"><a href="{% url 'viewproject' project.id %}" class="viewprojectbutton" style="color: white;" >View Project Details</a></button>                 
+                </div>
+                {% endfor %}
+{%endblock%}

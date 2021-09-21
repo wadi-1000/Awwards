@@ -4,10 +4,31 @@
 <div class="conatiner-fluid login">
     <legend class="border-bottom mb-4">Profile Info</legend>
     <div class="row">
-        <div class="col-md-4">
-            <a href="{% url 'profile' %}"> <img class="rounded-circle account-image " width="55%"  src="{{ user.profile.image.url }}" > {{ user.username}}</a>
- 
+        <div class="col-md-6">
+            <a href="{% url 'profile' %}"> <img class="rounded-circle account-image " width="55%"  src="{{ user.profile.image.url }}" > </a>
+            <h4>Username: {{ user.username}}</h4>
             <p>Bio: {{user.profile.bio }}</p>
+            <p>Location: {{user.profile.location }}</p>
+            <p>Phone number: {{user.profile.number}}</p>
+            <p>Email: {{user.profile.email }}</p>
+            
+            <!-- <legend class="border-bottom mb-4">My Projects</legend>
+            {% for project in project %}
+                <h5>Project Title: {{project.title}}</h5>
+                <br>
+                <br>
+                <img src="{{project.image.url}}" alt="{{project.description}}">
+                <br>
+                <br>
+                <br>
+                <h6>Project owner: {{project.profile}}</h6>
+                <p class="viewdescription">Project Description: {{project.description}}</p>
+                <p>Project Link: <a href="{{project.link}}">{{project.link}}</a></p>
+            {% endfor %} -->
+        </div>
+        
+        <div class="col-md-6">
+        <legend class="border-bottom mb-4">Update your profile here.</legend>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ profile_update_form|crispy }}
@@ -15,13 +36,7 @@
                     <input type="submit" value="Update Profile" class="btn btn-primary btn-sm">
                 </div>
             </form>
-        </div>
-        <!-- <div class="col-md-8">
-            <legend class="border-bottom mb-4">My Photos</legend>
-            {% for image in images %}
-            <img src="{{ image.image.url }}">
-            {% endfor %}
-        </div> -->
+            </div>
     </div>
 </div>
 

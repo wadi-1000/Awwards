@@ -3,12 +3,12 @@
 
 {% load crispy_forms_tags %}
 {% block content %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet"> -->
 <div class="container login">
     <div class="row">
         <div class="col-4">
@@ -17,9 +17,9 @@
             {% if form.errors %}
             <p>Some information Might be Incorrect </p>
             {% endif %}
-            <div class="col-4" style="font-family: 'Lora', serif; margin: 30px; color: darkslategray;">
+            <div class="col-4">
                     <form method="POST">
-                        <h3 class="text-center" style="font-family: 'Crimson Text', serif;">Awwards</h3><br>
+                        <h3 class="text-center">Awwards</h3><br>
                         {% csrf_token %}
                         <legend class="border-bottom mb-4">Join Today</legend>
                         {{ form|crispy }}
